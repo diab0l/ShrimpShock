@@ -2,15 +2,15 @@
 using System.Collections;
 
 public class Shockwave : MonoBehaviour {
-
-    public Vector2 direction = new Vector2(10f, 10f);
-    public float velocity;
+    float velocity =500;
     public bool shootable;
+    public string color;
 
 	// Use this for initialization
 	void Start () {
         //rigidbody2D.AddForce(direction*velocity);
         shootable = true;
+        color = "none";
 	}
 	
 	// Update is called once per frame
@@ -22,18 +22,40 @@ public class Shockwave : MonoBehaviour {
         {
             if(Input.GetMouseButtonDown(0))
             {
-                direction = Camera.main.ScreenToWorldPoint(Input.mousePosition)-gameObject.transform.position;
-                rigidbody2D.AddForce(direction * velocity);
+                Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition)-gameObject.transform.position;
+                shoot(direction);
+                
             }
             
         }
         if (rigidbody2D.velocity==(new Vector2(0.0f,0.0f)))
         {
-            gameObject.transform.position = (new Vector2(0.0f, 0.0f));
-            shootable = true;
+            reset();
         }
 	}
+    void reset()
+    {
+        gameObject.transform.position = (new Vector2(0.0f, 0.0f));
+        shootable = true;
+        rigidbody2D.velocity=(new Vector2(0.0f,0.0f));
+    }
+    void shoot(Vector2 direction){
+        shootable = false;
+        rigidbody2D.AddForce(direction * velocity);
+    }
     void OnCollisionEnter2D(Collision2D col)
     {
+        string colliderColor = col.gameObject.tag;
+        if (colliderColor!="Untagged")
+        {
+            if (color == "none")
+            {
+                color = colliderColor;
+            }
+            else if (color != colliderColor)
+            {
+                reset();
+            }
+        }
     }
 }
