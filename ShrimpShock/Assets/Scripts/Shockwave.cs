@@ -5,6 +5,8 @@ public class Shockwave : MonoBehaviour {
     float velocity =500;
     public bool shootable;
     public string color;
+    public bool slowdown;
+    public float slowDownTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +20,17 @@ public class Shockwave : MonoBehaviour {
         //gameObject.transform.localPosition += direction * velocity * Time.deltaTime;
         //Debug.Log("Vorwaerts");
         //rigidbody2D.velocity = rigidbody2D.velocity*0.9999f;
+        if (slowdown)
+	    {
+		    slowDownTimer-=Time.deltaTime;
+            if (slowDownTimer<=0)
+	        {
+		    slowdown=false;
+            shootable = false;
+            Time.timeScale = 1.0f;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+	        }
+	    }
         if (shootable)
         {
             if(Input.GetMouseButtonDown(0))
@@ -41,13 +54,22 @@ public class Shockwave : MonoBehaviour {
     }
     void shoot(Vector2 direction){
         shootable = false;
+        slowdown = false;
+        Time.timeScale = 1.0f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
         rigidbody2D.AddForce(direction * velocity);
     }
     void OnCollisionEnter2D(Collision2D col)
     {
+        
         string colliderColor = col.gameObject.tag;
         if (colliderColor!="Untagged")
         {
+            slowdown = true;
+            slowDownTimer=0.04f;
+            Time.timeScale=0.01f;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            shootable=true;
             if (color == "none")
             {
                 color = colliderColor;
