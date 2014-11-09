@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 public class CrabPistolAnimator : MonoBehaviour {
     public Sprite[] Sprites;
     public float FramesPerSecond;
-    private bool run;
-
+    
     private SpriteRenderer spriteRenderer;
 
+    private float startTime;
+
+
     public void ResetAnimation() {
-        this.run = true;
+        this.startTime = Time.timeSinceLevelLoad;
     }
 
     // Use this for initialization
@@ -18,17 +22,11 @@ public class CrabPistolAnimator : MonoBehaviour {
     
     // Update is called once per frame
     private void Update() {
-        if (!this.run) {
-            return;
+        var index = (int)((Time.timeSinceLevelLoad - this.startTime) * this.FramesPerSecond);
+
+        if (index > this.Sprites.Length) {
+            index = this.Sprites.Length - 1;
         }
-
-        var index = (int)(Time.timeSinceLevelLoad * this.FramesPerSecond);
-
-        if (index >= this.Sprites.Length) {
-            this.run = false;
-        }
-
-        index = index % this.Sprites.Length;
 
         this.spriteRenderer.sprite = this.Sprites[index];
     }
