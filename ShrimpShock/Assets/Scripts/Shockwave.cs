@@ -75,6 +75,8 @@ public class Shockwave : MonoBehaviour {
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         rigidbody2D.AddForce(direction * velocity);
         
+        var anim = GameObject.Find("CrabPistolAnimation");
+        anim.GetComponent<CrabPistolAnimator>().ResetAnimation();
     }
     void OnCollisionEnter2D(Collision2D col)
     {
