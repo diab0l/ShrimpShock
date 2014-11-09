@@ -52,6 +52,7 @@ public class Shockwave : MonoBehaviour {
             reset();
         }
 	}
+
     void reset()
     {
         gameObject.transform.position = new Vector2(0.0f, 0.0f);
@@ -61,6 +62,7 @@ public class Shockwave : MonoBehaviour {
         rigidbody2D.velocity=new Vector2(0.0f,0.0f);
         color = "none";
     }
+
     void shoot(Vector2 direction){
         shootable = false;
         slowdown = false;
@@ -73,14 +75,14 @@ public class Shockwave : MonoBehaviour {
         }
         else
         {
-            rigidbody2D.AddForce(-1 * rigidbody2D.velocity);
-//            rigidbody2D.AddForce(direction * velocity * velocityGain, ForceMode2D.Force);
+            rigidbody2D.AddForce(direction * velocity * velocityGain, ForceMode2D.Force);
 //            rigidbody2D.Force(direction * velocity * velocityGain);
         }
 
         var crabPistol = GameObject.Find("CrabPistolAnimation").GetComponent<CrabPistolAnimator>();
         crabPistol.ResetAnimation(this.transform.position, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 180);
     }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         string colliderColor = col.gameObject.tag;
