@@ -534,10 +534,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 500
+  velocityGain: 0
   shootable: 0
   color: 
   slowdown: 0
   slowDownTimer: 0
+  slowDownTimeStart: 0
   startPosition: {x: 0, y: 0, z: 0}
   directionPosition: {x: 0, y: 0, z: 0}
   resetspeed: 0
@@ -617,6 +619,8 @@ GameObject:
   - 4: {fileID: 772653893}
   - 212: {fileID: 772653892}
   - 114: {fileID: 772653891}
+  - 50: {fileID: 772653895}
+  - 233: {fileID: 772653894}
   m_Layer: 0
   m_Name: CrabPistolAnimation
   m_TagString: Untagged
@@ -635,8 +639,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c537d6f31997b42bc6feb3f383b0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sprites: []
-  FramesPerSecond: 0
+  Sprites:
+  - {fileID: 21300000, guid: eb3087ab1919fd245833acb9fb9c6c02, type: 3}
+  - {fileID: 21300000, guid: 0f4ba761b90a48f4eaca0ba2de8215b5, type: 3}
+  - {fileID: 21300000, guid: 5be00ed71fe298c4c807ac560a9aca68, type: 3}
+  - {fileID: 21300000, guid: af4501b3c3257dc45946eb29bc6c944e, type: 3}
+  - {fileID: 21300000, guid: b43bbb1ebb2153840964363b1f0b385e, type: 3}
+  - {fileID: 21300000, guid: 59b88071380613240b80a9e312b15c39, type: 3}
+  - {fileID: 21300000, guid: d03958e4a2f41bf4b92ec69e13c4ea12, type: 3}
+  FramesPerSecond: 96
 --- !u!212 &772653892
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -671,6 +682,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
+--- !u!233 &772653894
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 772653890}
+  m_Enabled: 1
+  m_CollideConnected: 0
+  m_ConnectedRigidBody: {fileID: 772653895}
+  m_Anchor: {x: -1.00880611, y: .203799263}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_UseMotor: 0
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 0
+  m_AngleLimits:
+    m_LowerAngle: 0
+    m_UpperAngle: 359
+--- !u!50 &772653895
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 772653890}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!1 &844477757
 GameObject:
   m_ObjectHideFlags: 0

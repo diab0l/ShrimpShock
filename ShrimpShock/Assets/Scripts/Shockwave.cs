@@ -78,7 +78,8 @@ public class Shockwave : MonoBehaviour {
 //            rigidbody2D.Force(direction * velocity * velocityGain);
         }
 
-        GameObject.Find("CrabPistolAnimation").GetComponent<CrabPistolAnimator>().ResetAnimation();
+        var crabPistol = GameObject.Find("CrabPistolAnimation").GetComponent<CrabPistolAnimator>();
+        crabPistol.ResetAnimation(this.transform.position, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 180);
     }
     void OnCollisionEnter2D(Collision2D col)
     {
