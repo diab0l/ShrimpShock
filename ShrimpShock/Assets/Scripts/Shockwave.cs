@@ -2,14 +2,15 @@
 using System.Collections;
 
 public class Shockwave : MonoBehaviour {
-    float velocity =500;
+    public float velocity =500;
     public bool shootable;
     public string color;
     public bool slowdown;
     public float slowDownTimer;
     public Vector3 startPosition;
     public Vector3 directionPosition;
-    public Vector2 direction;
+    public float resetspeed;
+
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,7 @@ public class Shockwave : MonoBehaviour {
         //gameObject.transform.localPosition += direction * velocity * Time.deltaTime;
         //Debug.Log("Vorwaerts");
         //rigidbody2D.velocity = rigidbody2D.velocity*0.9999f;
-        if (slowdown && !shootable)
+        if (slowdown)
 	    {
 		    slowDownTimer-=Time.deltaTime;
             if (slowDownTimer<=0)
@@ -40,40 +41,32 @@ public class Shockwave : MonoBehaviour {
 
                 //gameObject.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 startPosition = Input.mousePosition;
-                startPosition.z = 25f;
-                gameObject.transform.position = Camera.main.ScreenToWorldPoint(startPosition);
+                //startPosition.z = 25f;
+                //gameObject.transform.position = Camera.main.ScreenToWorldPoint(startPosition);
             }
             if (Input.GetMouseButtonUp(0))
             {
                 directionPosition = Input.mousePosition - startPosition;
-                Vector2 pos = directionPosition;
-                if (Mathf.Abs(pos.x) > Mathf.Abs(pos.y))
-                {
-                    pos.x = pos.x / Mathf.Abs(pos.y);
-                    pos.y = pos.y / Mathf.Abs(pos.y);
-                }
-                else
-                {
-                    pos.x = pos.x / Mathf.Abs(pos.x);
-                    pos.y = pos.y / Mathf.Abs(pos.x);
-                }
-                direction = pos;
+                Vector2 pos = directionPosition-gameObject.transform.position;
+                pos.Normalize();
+                
 //                direction = pos / (Mathf.Sqrt(pos.x*pos.x+pos.y*pos.y));
-                shoot(direction);
+                shoot(pos);
             }
 
             
         }
-        if (rigidbody2D.velocity==(new Vector2(0.0f,0.0f)) && !shootable)
+        if (rigidbody2D.velocity.magnitude<=resetspeed)
         {
             reset();
         }
 	}
     void reset()
     {
-        gameObject.transform.position = new Vector2(1.0f, 1.0f);
+        gameObject.transform.position = new Vector2(0.0f, 0.0f);
         shootable = true;
         rigidbody2D.velocity=new Vector2(0.0f,0.0f);
+        color = "none";
     }
     void shoot(Vector2 direction){
         shootable = false;
@@ -90,7 +83,7 @@ public class Shockwave : MonoBehaviour {
         if (colliderColor!="Untagged")
         {
             slowdown = true;
-            slowDownTimer=0.04f;
+            slowDownTimer=0.025f;
             Time.timeScale=0.01f;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
             shootable=true;
