@@ -48,6 +48,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CrabPistolAnimator.cs" />
     <Compile Include="Assets\Scripts\GameControlScript.cs" />
     <Compile Include="Assets\Scripts\Shellscript.cs" />
     <Compile Include="Assets\Scripts\Shockwave.cs" />
